@@ -1,11 +1,13 @@
 var express = require('express'); 
-var exhbs = require('express-handlebars');
+var exphbs = require('express-handlebars');
 var mongoose = require('mongoose');
 var cheerio = require('cheerio');
 var axios = require('axios');
 var app = express();
 var path = require('path');
 
+
+var db = require("./models");
 
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
@@ -19,10 +21,22 @@ mongoose.connect("mongodb://localhost:27017/scrubberdb", { useNewUrlParser: true
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 mongoose.connect(MONGODB_URI);
 
+// the followin g 2 lines of code are whats neccessaey to get handlebars started
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
 
+
+// ------------------copied from github-----------------
+// 
+
+//-------------------copied fomr github-----------------
+ 
+
+// ---------------routing---------------
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'));
+    res.render('index');
 });
+// ---------------routing---------------
 
 
 
