@@ -5,7 +5,7 @@ var cheerio = require('cheerio');
 var axios = require('axios');
 var app = express();
 var path = require('path');
-
+const port = process.env.PORT || 3000;
 
 var db = require("./models");
 
@@ -22,7 +22,7 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines
 mongoose.connect(MONGODB_URI);
 
 // the followin g 2 lines of code are whats neccessaey to get handlebars started
-app.engine('handlebars', exphbs());
+app.engine('handlebars', exphbs({defaultLayout:"main"}));
 app.set('view engine', 'handlebars');
 
 
@@ -36,11 +36,15 @@ app.set('view engine', 'handlebars');
 app.get('/', function(req, res) {
     res.render('index');
 });
+
+app.get('/scraped', function(req, res) {
+    res.render('scraped');
+});
 // ---------------routing---------------
 
 
 
 
-app.listen(3000, function() {
+app.listen(port, function() {
     console.log("App running on port 3000!");
   });
